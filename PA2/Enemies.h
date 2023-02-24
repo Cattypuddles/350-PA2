@@ -8,7 +8,14 @@
 
 class Enemies {
 public:
+
+    bool win;
+
     ~Enemies();
+    bool enemyFight(char c);
+    bool koopaFight();
+    bool goombaFight();
+    bool bossFight();
 };
 
 

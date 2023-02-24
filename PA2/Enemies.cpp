@@ -4,14 +4,54 @@
 
 #include "Enemies.h"
 
+bool win;
+
 Enemies :: ~Enemies(){
 
 }
 
-//a quicker but messier way would be to do this in marios giant switch statement but oh well
+bool Enemies :: enemyFight(char c){
+    // FIXME: Char c is invalid input but Im lazy rn
+    switch (char c){
+        case 'K':
+            //koopa fight
+            if (win){
+                return true;
+            }
+        case 'G':
+            //koopa fight
+            if (win){
+                return true;
+            }
+        case 'B':
+            //koopa fight
+            if (win){
+                return true;
+            }
+        default:
+            return false;
+    }
+}
 
-//goomba - 80% chance to win
+bool Enemies :: koopaFight(){
 
-//koopa - 65% chance to win
+    //koopa - 65% chance to win
 
-//if 7 enemies defeated in one life, +1 life
+    return win;
+};
+
+bool Enemies :: goombaFight(){
+
+    //goomba - 80% chance to win
+
+    return win;
+};
+
+bool Enemies :: bossFight(){
+
+    //boss - 50% chance to win??
+    //FIXME: check boss chance win percentage
+
+    return win;
+};
+

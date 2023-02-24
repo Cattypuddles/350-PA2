@@ -1,0 +1,6 @@
+# ninja log v5
+12	89	6989284688410565	CMakeFiles/PA2.dir/CreateLevel.cpp.obj	4e1f2179a207225c
+23	90	6989284688410565	CMakeFiles/PA2.dir/Boss.cpp.obj	af33f7a6fc0149aa
+27	98	6989284688539542	CMakeFiles/PA2.dir/Enemies.cpp.obj	41b560e049a4a03
+0	394	6989284691485762	CMakeFiles/PA2.dir/main.cpp.obj	851e4c9336d6bd1c
+6	395	6989284691485762	CMakeFiles/PA2.dir/CreateWorld.cpp.obj	43743e9924922983

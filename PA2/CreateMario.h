@@ -18,6 +18,7 @@ public:
     void statCheck();
     void marioMoves();
     void marioInteracts();
+    void checkLocation();
 };
 
 
