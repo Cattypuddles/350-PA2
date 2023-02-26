@@ -17,7 +17,7 @@ public:
     void createMario(int lives);
     void statCheck();
     void marioMoves();
-    void marioInteracts();
+    void marioInteracts(char c);
     void checkLocation();
 };
 

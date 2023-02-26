@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include "Mario.h"
+#include "Levels.h"
 
 int marioLives;
 int marioCoins;
@@ -12,15 +13,15 @@ int marioPowerLevel;
 int marioPreviousPowerLevel;
 int EnemiesDefeatedOnCurrentLife;
 std::string lastAction;
-std::string NextDirection;
+std::string nextDirection;
 
 
-SetLives(int initialNumberOfLives) {
-   // Lives = initialNumberOfLives
+void SetLives(int initialNumberOfLives) {
+   marioLives = initialNumberOfLives;
 }
 
 int GetPreviousPowerLevel(){
-
+    return marioPreviousPowerLevel;
 }
 
 std::string GetLastAction(){
@@ -32,123 +33,161 @@ int GetLivesRemaining(){
 }
 
 int GetNumberOfCoins(){
-
+    return marioCoins;
 }
 
-int GetNextDirection(){
-
+std::string GetNextDirection(){
+    return nextDirection;
 }
 
-Initialize(){
-//nextDirection = random int between 1 and 4
-//coins = 0 etc
-}
-
-Move(){
-PreviousPowerLevel = PowerLevel
-char result = Levels.Move(nextDirection)
-
-bool haveLost = false
-
-switch (result):
-case "x":
-// nothing
-lastAction = "The position is empty"
-case "m":
-// EatMushroom()
-lastAction = "Mario ate a mushroom"
-case "c":
-// PickupCoin()
-lastAction = "Mario ate a mushroom"
-case "k":
-// haveLost = FightKoopa()
-lastAction = "Mario ate a mushroom"
-case "g":
-// haveLost = FightGoomba()
-if (haveLost)
-lastAction = "Mario fought a Goomba and lost"
-else
-lastAction = "Mario fought a Goomba and lost"
-case "b":
-// haveLost = FightBoss()
-lastAction = "Mario ate a mushroom"
-case "w":
-// Warp()
-lastAction = "Mario ate a mushroom"
-
-if (haveLost)
-Move()
-else
-Levels.ClearCurrentMarioLocation()
-
-nextDirection = random int between 1 and 4
+void Initialize(){
+    int moveDirection = rand() % 4;
+    //nextDirection = random int between 1 and 4
+    marioCoins = 0;
+    marioPowerLevel = 0;
+    EnemiesDefeatedOnCurrentLife = 0;
 }
 
 void Warp() {
-    Levels.GoToNextLevel()
+    Levels.GoToNextLevel();
 }
 
+void LoseToBoss(){
+    marioPowerLevel = marioPowerLevel - 2;
+    if (marioPowerLevel < 0) {
+        marioLives--;
+        marioPowerLevel = 0;
+    }
+}
 
-bool FightBoss(){
-haveLost = false
-pick a number between 0 and 99
-if the number is less than 50
-// we won
-DefeatBoss()
-else
-// we lost
-haveLost = true
-LoseToBoss()
-return haveLost
+void DefeatBoss(){
+    EnemiesDefeatedOnCurrentLife++;
+    if (EnemiesDefeatedOnCurrentLife == 7) {
+        marioLives++;
+        EnemiesDefeatedOnCurrentLife = 0;
+    }
+    Warp();
 }
-LoseToBoss(){
-PowerLevel = PowerLevel - 2
-if (PowerLevel < 0)
-Lives--
-PowerLevel = 0
+
+void LoseToEnemy(){
+    marioPowerLevel--;
+    if (marioPowerLevel < 0){
+        marioLives--;
+        marioPowerLevel = 0;
+    }
 }
-DefeatBoss(){
-EnemiesDefeatedOnCurrentLife++
-if (EnemiesDefeatedOnCurrentLife == 7)
-Lives++
-EnemiesDefeatedOnCurrentLife = 0
-Warp()
+
+void DefeatEnemy(){
+    EnemiesDefeatedOnCurrentLife++;
+    if (EnemiesDefeatedOnCurrentLife == 7) {
+        marioLives++;
+        EnemiesDefeatedOnCurrentLife = 0;
+    }
 }
+
+bool FightBoss() {
+    bool haveLost = false;
+    int fightingHands = rand() % 99;
+    if (fightingHands < 50) {
+        DefeatBoss();
+    }
+    else {
+        // we lost
+        haveLost = true;
+        LoseToBoss();
+        return haveLost;
+    }
+}
+
 bool FightKoopa(){
-haveLost = false
-pick a number between 0 and 99
-if the number is less than 65
-// we won
-DefeatEnemy()
-else
-// we lost
-haveLost = true
-LoseToEnemy()
-return haveLost
-}
-LoseToEnemy(){
-PowerLevel--
-if (PowerLevel < 0)
-Lives--
-PowerLevel = 0
-}
-DefeatEnemy(){
-EnemiesDefeatedOnCurrentLife++
-if (EnemiesDefeatedOnCurrentLife == 7)
-Lives++
-EnemiesDefeatedOnCurrentLife = 0
-}
-PickupCoin(){
-Coins++  // aka Coins = Coins + 1
-if (Coins > 20)
-{
-Coins = 0
-Lives++
-}
+    bool haveLost = false;
+    int fightingHands = rand() % 99;
+    if (fightingHands < 65) {
+        DefeatEnemy();
+    }
+    else {
+        // we lost
+        haveLost = true;
+        LoseToEnemy();
+        return haveLost;
+    }
 }
 
-EatMushroom(){
-PowerLevel = PowerLevel + 1
-if (PowerLevel > 3)
-PowerLevel = 3
+bool FightGoomba(){
+    bool haveLost = false;
+    int fightingHands = rand() % 99;
+    if (fightingHands < 80) {
+        DefeatEnemy();
+    }
+    else {
+        // we lost
+        haveLost = true;
+        LoseToEnemy();
+        return haveLost;
+    }
+}
+
+void PickupCoin(){
+    marioCoins++; // aka Coins = Coins + 1
+    if (marioCoins > 20){
+        marioCoins = 0;
+        marioLives++;
+    }
+}
+
+void EatMushroom(){
+    marioPowerLevel = marioPowerLevel + 1;
+    if (marioPowerLevel > 3) {
+        marioPowerLevel = 3;
+    }
+}
+
+void marioMove() {
+    marioPreviousPowerLevel = marioPowerLevel;
+
+    char result = Levels.Move(nextDirection);
+
+    bool haveLost = false;
+
+    switch (result) {
+        case 'x':
+            // nothing
+            lastAction = "The position was empty.";
+        case 'm':
+            EatMushroom();
+            lastAction = "Mario ate a mushroom.";
+        case 'c':
+            PickupCoin();
+            lastAction = "Mario picked up a coin.";
+        case 'k':
+            haveLost = FightKoopa();
+            if (haveLost)
+                lastAction = "Mario fought a Koopa and lost.";
+            else
+                lastAction = "Mario fought a Koopa and won.";
+        case 'g':
+            haveLost = FightGoomba();
+            if (haveLost)
+                lastAction = "Mario fought a Goomba and lost.";
+            else
+                lastAction = "Mario fought a Goomba and won.";
+        case 'b':
+            haveLost = FightBoss();
+            if (haveLost)
+                lastAction = "Mario fought the boss and lost.";
+            else
+                lastAction = "Mario fought the boss and won.";
+            Warp();
+        case 'w':
+            Warp();
+            lastAction = "Mario found a warp pipe.";
+    }
+
+    if (haveLost) {
+        marioMove();
+    } else {
+        Levels.ClearCurrentMarioLocation();
+
+        nextDirection = rand() % 4;
+    }
 }

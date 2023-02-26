@@ -54,9 +54,9 @@ void CreateMario :: marioMoves(){
    statCheck();
 }
 
-void CreateMario :: marioInteracts(){
+void CreateMario :: marioInteracts(char c){
     // FIXME: Char c is invalid input but Im lazy rn
-    switch (char c) {
+    switch (char c.) {
         case 'M':
             powerLevel += 1;
             std::cout << "Mario has found a mushroom! He gains a Power Level!" << std::endl;
