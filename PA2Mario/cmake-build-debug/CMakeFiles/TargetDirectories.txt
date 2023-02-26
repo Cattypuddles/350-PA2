@@ -1,0 +1,3 @@
+C:/Users/Vic/CLionProjects/PA2Mario/cmake-build-debug/CMakeFiles/PA2Mario.dir
+C:/Users/Vic/CLionProjects/PA2Mario/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Vic/CLionProjects/PA2Mario/cmake-build-debug/CMakeFiles/rebuild_cache.dir
