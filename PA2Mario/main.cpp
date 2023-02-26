@@ -16,6 +16,12 @@ int mushroomsPercent;
 
 void PrintStatus(){
 // print all the stuffs using the getter methods
+std::cout << "☆☆☆☆☆☆☆☆☆☆" << std::endl;
+std::cout<< "Level: " << level->currentLevel << ". Mario is at position: (" << level->marioRow << "," << level->marioColumn <<
+    ". Mario is at power level " << mario->GetPreviousPowerLevel() << ". " << mario->GetLastAction() << " Mario has "
+    << mario->GetLivesRemaining() << " lives left. Mario has " << mario->GetNumberOfCoins() << " coins. Mario will move " <<
+    mario->GetNextDirection() << std::endl;
+std::cout << "☆☆☆☆☆☆☆☆☆☆" << std::endl;
 }
 
 
