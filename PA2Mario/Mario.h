@@ -7,7 +7,33 @@
 
 
 class Mario {
+public:
+    int marioLives;
+    int marioCoins;
+    int marioPowerLevel;
+    int marioPreviousPowerLevel;
+    int EnemiesDefeatedOnCurrentLife;
+    std::string lastAction;
+    std::string nextDirection;
 
+    void SetLives(int initialNumberOfLives);
+    int GetPreviousPowerLevel();
+    std::string GetLastAction();
+    int GetLivesRemaining();
+    int GetNumberOfCoins();
+    std::string GetNextDirection();
+    void Initialize(int l);
+    void Warp();
+    void LoseToBoss();
+    void DefeatBoss();
+    void LoseToEnemy();
+    void DefeatEnemy();
+    bool FightBoss();
+    bool FightKoopa();
+    bool FightGoomba();
+    void PickupCoin();
+    void EatMushroom();
+    void marioMove();
 };
 
 

@@ -40,12 +40,13 @@ std::string GetNextDirection(){
     return nextDirection;
 }
 
-void Initialize(){
+void Initialize(int l){
     int moveDirection = rand() % 4;
     //nextDirection = random int between 1 and 4
     marioCoins = 0;
     marioPowerLevel = 0;
     EnemiesDefeatedOnCurrentLife = 0;
+    marioLives = int l;
 }
 
 void Warp() {
@@ -95,8 +96,8 @@ bool FightBoss() {
         // we lost
         haveLost = true;
         LoseToBoss();
-        return haveLost;
     }
+    return haveLost;
 }
 
 bool FightKoopa(){
@@ -109,8 +110,8 @@ bool FightKoopa(){
         // we lost
         haveLost = true;
         LoseToEnemy();
-        return haveLost;
     }
+    return haveLost;
 }
 
 bool FightGoomba(){
@@ -123,8 +124,8 @@ bool FightGoomba(){
         // we lost
         haveLost = true;
         LoseToEnemy();
-        return haveLost;
     }
+    return haveLost;
 }
 
 void PickupCoin(){
