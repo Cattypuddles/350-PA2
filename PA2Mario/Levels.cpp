@@ -2,147 +2,195 @@
 // Created by Vic on 2/25/2023.
 //
 
+#include <iostream>
 #include "Levels.h"
+
+using namespace std;
 
 int marioRow;
 int marioColumn;
 int currentLevel;
+int coinPercent;
+int emptyPercent;
+int goombaPercent;
+int koopaPercent;
+int mushroomPercent;
+int randomNum;
+int lvlDimension;
+int numOfLevels;
+char*** marioWorld;
 
-int GetCurrentLevel(){
+Levels:: Levels(){
 
-}
+    //Create marioWorld 3D Array
+    marioWorld = new char**[numOfLevels];
 
-int GetMarioRow(){
+    for (int i = 0; i < numOfLevels; i++){
 
-}
+        marioWorld[i] = new char*[lvlDimension];
 
-int GetMarioColumn(){
+        for (int j=0; j < numOfLevels; j++){
 
-}
-
-void PrintLevel(){
-
-}
-
-
-void ClearCurrentMarioLocation(){
-//set the current level's grid value at marioRow / marioColumn to "x"
-}
-
-void GoToNextLevel(){
-currentLevel++
-PlaceMarioInLevel()
-}
-
-bool IsGameRunning(){
-    if (currentLevel < the third dimension of the array){
-        return true;
+            marioWorld[i][j] = new char[lvlDimension];
+        }
     }
-return false;
+
+// Populate levels for the numberOfLevels
+    for (int i = 0; i < lvlDimension; i++){
+        for (int j=0; j < lvlDimension; j++){
+            marioWorld[i][j] = new char[itemAtSlot()];
+        }
+    }
+
 }
 
-char Move(int direction) {
-    //Return item at Mario's new position
+Levels::~Levels(){
+
+}
+
+int Levels::getCurrentLevel() {
+    return currentLevel;
+}
+
+int Levels::getMarioRow() {
+    return marioRow;
+}
+
+int Levels::getMarioColumn() {
+    return marioColumn;
+}
+
+void Levels::printLevel() {
+
+}
+
+void Levels::clearCurrentMarioLocation(){
+    //set the current level's grid value at marioRow / marioColumn to "x"
+}
+
+void Levels::goToNextLevel(){
+    currentLevel++;
+}
+
+void Levels::placeMarioInLevel() {
+    marioRow = uniqueNumChosen();
+    marioColumn = uniqueNumChosen();
+    // pick row number between 0 and (levelDimension - 1)
+    // ex: levelDimension is 5, pick a number between 0 and 4
+    // pick column number between 0 and (levelDimension - 1)
+    // ex: levelDimension is 5, pick a number between 0 and 4
+    // set marioRow to the random row number
+    // set marioColumn to the random column number
+}
+
+bool Levels::isGameRunning(){
+    //if (currentLevel < the third dimension of the array)
+    //return true
+    //return false
+}
 
 
-// switch (direction):
+char Levels::move(int direction){
+// Return item at Mario's new position
+char c;
+switch (direction) {
+    case 0:
+        //up
+        marioRow--;
+        if (marioRow < 0){
+            marioRow = lvlDimension;
+        }
 
-// case 1: // up
-// subtract 1 from marioRow
-// if marioRow < 0 then marioRow = levelDimension
-// ex: if the level is 5x5 and mario tries to move off the level (less than 0),
-//     set marioRow to 4
+    case 1:
+        // down
+        marioRow++;
+        if (marioRow > lvlDimension){
+            marioRow = 0;
+        }
 
-// case 2: // down
-// add 1 to marioRow
-// if marioRow > (levelDimension - 1), then marioRow = 0
-// ex: if the level is 5x5 and mario tries to move off the level (more than 4),
-//     set marioRow to 0
+    case 2:
+        // left
+        marioColumn--;
+        if (marioColumn < 0){
+            marioColumn = lvlDimension;
+        }
 
-// case 3: // left
-// subtract 1 from marioColumn
-// if marioColumn < 0 then marioColumn = levelDimension
-// ex: if the level is 5x5 and mario tries to move off the level (less than 0),
-//     set marioColumn to 4
+    case 3:
+        // right
+        marioColumn++;
+        if (marioColumn < lvlDimension){
+            marioColumn = 0;
+        }
+    }
 
-// case 4: // right
-// add 1 to marioColumn
-// if marioColumn > (levelDimension - 1), then marioColumn = 0
-// ex: if the level is 5x5 and mario tries to move off the level (more than 4),
-//     set marioColumn to 0
+    c = marioWorld[currentLevel][marioRow][marioColumn];
+    return c;
+}
 
 // check to see what item (if any) is in the same spot as mario
 // call GetItemAtRow(marioRow, marioColumn)
-
 // return the item char at mario's location
-}
-
-char GetItemAtRow(int rowNumber, int columnNumber){
-//return whatever character is at the row/column for the current level
-}
-
-
-void PlaceMarioInLevel() {
-// pick row number between 0 and (levelDimension - 1)
-// ex: levelDimension is 5, pick a number between 0 and 4
-
-// pick column number between 0 and (levelDimension - 1)
-// ex: levelDimension is 5, pick a number between 0 and 4
-
-// set marioRow to the random row number
-// set marioColumn to the random column number
+char Levels::getItemAtRow(int rowNumber, int columnNumber) {
+    return marioWorld[currentLevel][marioRow][marioColumn];
 }
 
 
-void MakeLevels(int levelDimension, int numberOfLevels, int baseCoinPercent,
-                int baseEmptyPercent, int baseGoombaPercent, int baseKoopaPercent, int baseMushroomPercent){
+void Levels::makeLevels(int levelDimension, int numberOfLevels, int baseCoinPercent,
+                    int baseEmptyPercent, int baseGoombaPercent, int baseKoopaPercent, int baseMushroomPercent) {
 
-currentLevel = -1 (one less than starting level because we'll call GoToNextLevel() )
-// baseCoinPercent = 20
-// baseEmptyPercent = 50
-// baseGoombaPercent = 10
-// baseKoopaPercent = 15
-// baseMushroomPercent = 5
+    currentLevel = -1; //(one less than starting level because we'll call GoToNextLevel() )
+    lvlDimension = levelDimension;
+    numOfLevels = numberOfLevels;
 
-// coinPercent = baseCoinPercent                        // 20
-// emptyPercent = coinPercent + baseEmptyPercent        // 70
-// goombaPercent = emptyPercent + baseGoombaPercent     // 80
-// koopaPercent = goombaPercent + baseKoopaPercent      // 95
-// mushroomPercent = koopaPercent + baseMushroomPercent // 100
+    //assigns base coin percentages
+    coinPercent = baseCoinPercent;
+    emptyPercent = coinPercent + baseEmptyPercent;
+    goombaPercent = emptyPercent + baseGoombaPercent;
+    koopaPercent = goombaPercent + baseKoopaPercent;
+    mushroomPercent = koopaPercent + baseMushroomPercent;
 
-// create levels for the numberOfLevels
-// ex: for i = 0; i < numberOfLevels; i++
-// create an array of levelDimension by levelDimension
-// so if levelDimension is 5, then it's a 5x5 array
+    //Create marioWorld 3D Array
+    Levels();
 
-marioWorld[i] = new char*[size];
 
-for (int j=0; j < levels; i++){
-marioWorld[i][j] = new char[size];
+    //Randomly places Warp Pipe in Levels
+    for (int i = numberOfLevels; i > 0; i--) {
+        int col = uniqueNumChosen();
+        int row = uniqueNumChosen();
+        marioWorld[i][row][col] = 'w';
+    }
+
+    //Randomly places Boss in Levels
+    for (int i = numberOfLevels; i > 0; i--) {
+        int col = uniqueNumChosen();
+        int row = uniqueNumChosen();
+        if (marioWorld[i][row][col] != 'w'){
+            marioWorld[i][row][col] = 'b';
+        }
+    }
 }
 
-// for each slot in the 2D array:
+char Levels::itemAtSlot(){
+    int slotNum = rand() % 99;
+    if (slotNum < coinPercent){
+        return 'c';
+    }
+    else if (slotNum < emptyPercent){
+        return 'x';
+    }
+    else if (slotNum < goombaPercent){
+        return 'g';
+    }
+    else if (slotNum < koopaPercent){
+        return 'k';
+    }
+    else{
+        return 'm';
+    }
+}
 
-// pick a randomNumber between 0 and 99
-// if randomNumber < coinPercent
-// coin
-// if randomNumber < emptyPercent
-// empty
-// if randomNumber < goombaPercent
-// goomba
-// if randomNumber < koopaPercent
-// koopa
-// otherwise, mushroom
+int Levels::uniqueNumChosen(){
+    randomNum = rand() % (lvlDimension-1);
+    return randomNum;
 
-// assign warp pipe
-// pick row number between 0 and (levelDimension - 1)
-// ex: levelDimension is 5, pick a number between 0 and 4
-
-// pick column number between 0 and (levelDimension - 1)
-// ex: levelDimension is 5, pick a number between 0 and 4
-
-// assign warpPipe to the column/row you picked
-// assign boss
-// same as warp pipe but for the boss
-GoToNextLevel()
 }

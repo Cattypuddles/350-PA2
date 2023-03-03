@@ -13,14 +13,16 @@ int goombasPercent;
 int koopasPercent;
 int mushroomsPercent;
 
+Levels *levels = new Levels();
+Mario *mario = new Mario();
 
 void PrintStatus(){
 // print all the stuffs using the getter methods
 std::cout << "☆☆☆☆☆☆☆☆☆☆" << std::endl;
-std::cout<< "Level: " << level->currentLevel << ". Mario is at position: (" << level->marioRow << "," << level->marioColumn <<
-    ". Mario is at power level " << mario->GetPreviousPowerLevel() << ". " << mario->GetLastAction() << " Mario has "
-    << mario->GetLivesRemaining() << " lives left. Mario has " << mario->GetNumberOfCoins() << " coins. Mario will move " <<
-    mario->GetNextDirection() << std::endl;
+std::cout<< "Level: " << levels->currentLevel << ". Mario is at position: (" << levels->marioRow << "," << levels->marioColumn <<
+    ". Mario is at power level " << mario->getPreviousPowerLevel() << ". " << mario->getLastAction() << " Mario has "
+    << mario->getLivesRemaining() << " lives left. Mario has " << mario->getNumberOfCoins() << " coins. Mario will move " <<
+    mario->getNextDirection() << std::endl;
 std::cout << "☆☆☆☆☆☆☆☆☆☆" << std::endl;
 }
 
@@ -46,19 +48,19 @@ void LoadData(){
 }
 
 int main() {
-    Levels *levels = new Levels();
-    Mario *mario = new Mario();
     LoadData();
-    mario->Initialize(numberOfLives);
-    levels->MakeLevels(levelDimension, numberOfLevels, coinPercent, emptyPercent, goombasPercent,
+    mario->initialize(numberOfLives);
+    levels->makeLevels(levelDimension, numberOfLevels, coinPercent, emptyPercent, goombasPercent,
                        koopasPercent, mushroomsPercent);
 
-    while (levels->IsGameRunning()) {
+    while (levels->isGameRunning()) {
         mario->marioMove();
         PrintStatus();
     }
     return 0;
 }
+
+
 
 
 

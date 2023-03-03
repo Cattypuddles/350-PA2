@@ -11,49 +11,60 @@ int marioLives;
 int marioCoins;
 int marioPowerLevel;
 int marioPreviousPowerLevel;
-int EnemiesDefeatedOnCurrentLife;
+int enemiesDefeatedOnCurrentLife;
+
 std::string lastAction;
 std::string nextDirection;
 
+Levels *levels = new Levels();
 
-void SetLives(int initialNumberOfLives) {
+
+Mario::Mario(){
+
+}
+
+Mario::~Mario(){
+
+}
+
+void Mario::setLives(int initialNumberOfLives) {
    marioLives = initialNumberOfLives;
 }
 
-int GetPreviousPowerLevel(){
+int Mario::getPreviousPowerLevel(){
     return marioPreviousPowerLevel;
 }
 
-std::string GetLastAction(){
+std::string Mario::getLastAction(){
     return lastAction;
 }
 
-int GetLivesRemaining(){
+int Mario::getLivesRemaining(){
     return marioLives;
 }
 
-int GetNumberOfCoins(){
+int Mario::getNumberOfCoins(){
     return marioCoins;
 }
 
-std::string GetNextDirection(){
+std::string Mario::getNextDirection(){
     return nextDirection;
 }
 
-void Initialize(int l){
+void Mario::initialize(int l){
     int moveDirection = rand() % 4;
     //nextDirection = random int between 1 and 4
     marioCoins = 0;
     marioPowerLevel = 0;
-    EnemiesDefeatedOnCurrentLife = 0;
-    marioLives = int l;
+    enemiesDefeatedOnCurrentLife = 0;
+    marioLives = l;
 }
 
-void Warp() {
-    Levels.GoToNextLevel();
+void Mario::warp() {
+    levels->goToNextLevel();
 }
 
-void LoseToBoss(){
+void Mario::loseToBoss(){
     marioPowerLevel = marioPowerLevel - 2;
     if (marioPowerLevel < 0) {
         marioLives--;
@@ -61,16 +72,16 @@ void LoseToBoss(){
     }
 }
 
-void DefeatBoss(){
-    EnemiesDefeatedOnCurrentLife++;
-    if (EnemiesDefeatedOnCurrentLife == 7) {
+void Mario::defeatBoss(){
+    enemiesDefeatedOnCurrentLife++;
+    if (enemiesDefeatedOnCurrentLife == 7) {
         marioLives++;
-        EnemiesDefeatedOnCurrentLife = 0;
+        enemiesDefeatedOnCurrentLife = 0;
     }
-    Warp();
+    warp();
 }
 
-void LoseToEnemy(){
+void Mario::loseToEnemy(){
     marioPowerLevel--;
     if (marioPowerLevel < 0){
         marioLives--;
@@ -78,57 +89,57 @@ void LoseToEnemy(){
     }
 }
 
-void DefeatEnemy(){
-    EnemiesDefeatedOnCurrentLife++;
-    if (EnemiesDefeatedOnCurrentLife == 7) {
+void Mario::defeatEnemy(){
+    enemiesDefeatedOnCurrentLife++;
+    if (enemiesDefeatedOnCurrentLife == 7) {
         marioLives++;
-        EnemiesDefeatedOnCurrentLife = 0;
+        enemiesDefeatedOnCurrentLife = 0;
     }
 }
 
-bool FightBoss() {
+bool Mario::fightBoss() {
     bool haveLost = false;
     int fightingHands = rand() % 99;
     if (fightingHands < 50) {
-        DefeatBoss();
+        defeatBoss();
     }
     else {
         // we lost
         haveLost = true;
-        LoseToBoss();
+        loseToBoss();
     }
     return haveLost;
 }
 
-bool FightKoopa(){
+bool Mario::fightKoopa(){
     bool haveLost = false;
     int fightingHands = rand() % 99;
     if (fightingHands < 65) {
-        DefeatEnemy();
+        defeatEnemy();
     }
     else {
         // we lost
         haveLost = true;
-        LoseToEnemy();
+        loseToEnemy();
     }
     return haveLost;
 }
 
-bool FightGoomba(){
+bool Mario::fightGoomba(){
     bool haveLost = false;
     int fightingHands = rand() % 99;
     if (fightingHands < 80) {
-        DefeatEnemy();
+        defeatEnemy();
     }
     else {
         // we lost
         haveLost = true;
-        LoseToEnemy();
+        loseToEnemy();
     }
     return haveLost;
 }
 
-void PickupCoin(){
+void Mario::pickupCoin(){
     marioCoins++; // aka Coins = Coins + 1
     if (marioCoins > 20){
         marioCoins = 0;
@@ -136,17 +147,18 @@ void PickupCoin(){
     }
 }
 
-void EatMushroom(){
+void Mario::eatMushroom(){
     marioPowerLevel = marioPowerLevel + 1;
     if (marioPowerLevel > 3) {
         marioPowerLevel = 3;
     }
 }
 
-void marioMove() {
+void Mario::marioMove() {
     marioPreviousPowerLevel = marioPowerLevel;
 
-    char result = Levels.Move(nextDirection);
+    char result;
+    result = levels->move(nextDirection);
 
     bool haveLost = false;
 
@@ -155,39 +167,39 @@ void marioMove() {
             // nothing
             lastAction = "The position was empty.";
         case 'm':
-            EatMushroom();
+            eatMushroom();
             lastAction = "Mario ate a mushroom.";
         case 'c':
-            PickupCoin();
+            pickupCoin();
             lastAction = "Mario picked up a coin.";
         case 'k':
-            haveLost = FightKoopa();
+            haveLost = fightKoopa();
             if (haveLost)
                 lastAction = "Mario fought a Koopa and lost.";
             else
                 lastAction = "Mario fought a Koopa and won.";
         case 'g':
-            haveLost = FightGoomba();
+            haveLost = fightGoomba();
             if (haveLost)
                 lastAction = "Mario fought a Goomba and lost.";
             else
                 lastAction = "Mario fought a Goomba and won.";
         case 'b':
-            haveLost = FightBoss();
+            haveLost = fightBoss();
             if (haveLost)
                 lastAction = "Mario fought the boss and lost.";
             else
                 lastAction = "Mario fought the boss and won.";
-            Warp();
+            warp();
         case 'w':
-            Warp();
+            warp();
             lastAction = "Mario found a warp pipe.";
     }
 
     if (haveLost) {
         marioMove();
     } else {
-        Levels.ClearCurrentMarioLocation();
+        levels->clearCurrentMarioLocation();
 
         nextDirection = rand() % 4;
     }
