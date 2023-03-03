@@ -12,11 +12,12 @@ int marioCoins;
 int marioPowerLevel;
 int marioPreviousPowerLevel;
 int enemiesDefeatedOnCurrentLife;
+int nextDirection = 0;
 
 std::string lastAction;
-std::string nextDirection;
+std::string textNextDirection;
 
-Levels *levels = new Levels();
+Levels *levelss = new Levels();
 
 
 Mario::Mario(){
@@ -48,7 +49,19 @@ int Mario::getNumberOfCoins(){
 }
 
 std::string Mario::getNextDirection(){
-    return nextDirection;
+    if (nextDirection == 0){
+        textNextDirection = "Up";
+    }
+    if (nextDirection == 1){
+        textNextDirection = "Down";
+    }
+    if (nextDirection == 0){
+        textNextDirection = "Left";
+    }
+    if (nextDirection == 0){
+        textNextDirection = "Right";
+    }
+    return textNextDirection;
 }
 
 void Mario::initialize(int l){
@@ -61,7 +74,7 @@ void Mario::initialize(int l){
 }
 
 void Mario::warp() {
-    levels->goToNextLevel();
+    levelss->goToNextLevel();
 }
 
 void Mario::loseToBoss(){
@@ -158,7 +171,7 @@ void Mario::marioMove() {
     marioPreviousPowerLevel = marioPowerLevel;
 
     char result;
-    result = levels->move(nextDirection);
+    result = levelss->move(nextDirection);
 
     bool haveLost = false;
 
@@ -199,7 +212,7 @@ void Mario::marioMove() {
     if (haveLost) {
         marioMove();
     } else {
-        levels->clearCurrentMarioLocation();
+        levelss->clearCurrentMarioLocation();
 
         nextDirection = rand() % 4;
     }

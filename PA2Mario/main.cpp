@@ -7,10 +7,10 @@
 int numberOfLevels;
 int levelDimension;
 int numberOfLives;
-int coinPercent;
-int emptyPercent;
-int goombasPercent;
-int koopasPercent;
+int baseCoinPercent;
+int baseEmptyPercent;
+int baseGoombasPercent;
+int baseKoopasPercent;
 int mushroomsPercent;
 
 Levels *levels = new Levels();
@@ -39,8 +39,8 @@ void LoadData(){
 
     std::ifstream input_stream( "Mario.txt", std::ifstream::in );
 
-    while (input_stream >> numberOfLevels >> levelDimension >> numberOfLives >> coinPercent >> emptyPercent >>
-    goombasPercent >> koopasPercent >> mushroomsPercent) {
+    while (input_stream >> numberOfLevels >> levelDimension >> numberOfLives >> baseCoinPercent >> baseEmptyPercent >>
+    baseGoombasPercent >> baseKoopasPercent >> mushroomsPercent) {
         std::cout << "Mario.txt Read successfully." << std::endl;
     }
 
@@ -50,8 +50,8 @@ void LoadData(){
 int main() {
     LoadData();
     mario->initialize(numberOfLives);
-    levels->makeLevels(levelDimension, numberOfLevels, coinPercent, emptyPercent, goombasPercent,
-                       koopasPercent, mushroomsPercent);
+    levels->makeLevels(levelDimension, numberOfLevels, baseCoinPercent, baseEmptyPercent, baseGoombasPercent,
+                       baseKoopasPercent, mushroomsPercent);
 
     while (levels->isGameRunning()) {
         mario->marioMove();

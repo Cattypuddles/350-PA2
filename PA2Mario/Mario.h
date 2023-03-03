@@ -14,7 +14,7 @@ public:
     int marioPreviousPowerLevel;
     int enemiesDefeatedOnCurrentLife;
     std::string lastAction;
-    std::string nextDirection;
+    int nextDirection;
 
     Mario();
     ~Mario();

@@ -1,0 +1,7 @@
+# ninja log v5
+0	458	6995766055013587	CMakeFiles/PA2Mario.dir/Levels.cpp.obj	2950a807603bd775
+14	473	6995766055234702	CMakeFiles/PA2Mario.dir/Mario.cpp.obj	547245a790a39ba6
+8	495	6995766055467275	CMakeFiles/PA2Mario.dir/main.cpp.obj	21a129cfff6f80f0
+4	312	6995769195644538	CMakeFiles/PA2Mario.dir/main.cpp.obj	21a129cfff6f80f0
+2	324	6995769578077200	CMakeFiles/PA2Mario.dir/Mario.cpp.obj	547245a790a39ba6
+325	409	6995769578882762	PA2Mario.exe	c097d551bc1e99ef

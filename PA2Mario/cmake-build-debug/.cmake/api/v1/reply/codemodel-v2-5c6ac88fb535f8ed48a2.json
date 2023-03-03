@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "V:/Game Thesis/350-PA2/PA2Mario/cmake-build-debug",
-		"source" : "V:/Game Thesis/350-PA2/PA2Mario"
+		"build" : "C:/Users/victo/Documents/CPSC_Courses/CPSC_298/350-PA2/PA2Mario/cmake-build-debug",
+		"source" : "C:/Users/victo/Documents/CPSC_Courses/CPSC_298/350-PA2/PA2Mario"
 	},
 	"version" : 
 	{
