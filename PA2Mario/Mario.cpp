@@ -71,6 +71,7 @@ void Mario::initialize(int l){
     marioPowerLevel = 0;
     enemiesDefeatedOnCurrentLife = 0;
     marioLives = l;
+    std::cout << "Mario initialized" << std::endl;
 }
 
 void Mario::warp() {

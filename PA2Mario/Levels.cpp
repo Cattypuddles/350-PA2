@@ -22,25 +22,87 @@ char*** marioWorld;
 
 Levels:: Levels(){
 
+//    //Create marioWorld 3D Array
+//    marioWorld = new char**[numOfLevels];
+//
+//    for (int i = 0; i < numOfLevels; i++){
+//
+//        marioWorld[i] = new char*[lvlDimension];
+//
+//        for (int j=0; j < numOfLevels; j++){
+//
+//            marioWorld[i][j] = new char[lvlDimension];
+//        }
+//    }
+//
+//// Populate levels for the numberOfLevels
+//    for (int i = 0; i < lvlDimension; i++){
+//        for (int j=0; j < lvlDimension; j++){
+//            marioWorld[i][j] = new char[itemAtSlot()];
+//        }
+//    }
+//
+//
+//    //Randomly places Warp Pipe in Levels
+//    for (int i = numOfLevels; i > 0; i--) {
+//        int col = uniqueNumChosen();
+//        int row = uniqueNumChosen();
+//        marioWorld[i][row][col] = 'w';
+//    }
+//
+//    //Randomly places Boss in Levels
+//    for (int i = numOfLevels; i > 0; i--) {
+//        int col = uniqueNumChosen();
+//        int row = uniqueNumChosen();
+//        if (marioWorld[i][row][col] != 'w'){
+//            marioWorld[i][row][col] = 'b';
+//        }
+//    }
+//
+//    std::cout << "Mario World created." << std::endl;
+
+}
+
+Levels:: Levels(int num, int lvl){
+
     //Create marioWorld 3D Array
-    marioWorld = new char**[numOfLevels];
+    marioWorld = new char**[num];
 
-    for (int i = 0; i < numOfLevels; i++){
+    for (int i = 0; i < num; i++){
 
-        marioWorld[i] = new char*[lvlDimension];
+        marioWorld[i] = new char*[lvl];
 
-        for (int j=0; j < numOfLevels; j++){
+        for (int j=0; j < num; j++){
 
-            marioWorld[i][j] = new char[lvlDimension];
+            marioWorld[i][j] = new char[lvl];
         }
     }
 
 // Populate levels for the numberOfLevels
-    for (int i = 0; i < lvlDimension; i++){
-        for (int j=0; j < lvlDimension; j++){
+    for (int i = 0; i < lvl; i++){
+        for (int j=0; j < lvl; j++){
             marioWorld[i][j] = new char[itemAtSlot()];
         }
     }
+
+
+    //Randomly places Warp Pipe in Levels
+    for (int i = num; i > 0; i--) {
+        int col = uniqueNumChosen();
+        int row = uniqueNumChosen();
+        marioWorld[i][row][col] = 'w';
+    }
+
+    //Randomly places Boss in Levels
+    for (int i = num; i > 0; i--) {
+        int col = uniqueNumChosen();
+        int row = uniqueNumChosen();
+        if (marioWorld[i][row][col] != 'w'){
+            marioWorld[i][row][col] = 'b';
+        }
+    }
+
+    std::cout << "Mario World 2 created." << std::endl;
 
 }
 
@@ -84,9 +146,10 @@ void Levels::placeMarioInLevel() {
 }
 
 bool Levels::isGameRunning(){
-    //if (currentLevel < the third dimension of the array)
-    //return true
-    //return false
+    if (currentLevel < numOfLevels) {
+        return true;
+    }
+    return false;
 }
 
 
@@ -149,25 +212,8 @@ void Levels::makeLevels(int levelDimension, int numberOfLevels, int baseCoinPerc
     koopaPercent = goombaPercent + baseKoopaPercent;
     mushroomPercent = koopaPercent + baseMushroomPercent;
 
-    //Create marioWorld 3D Array
-    Levels();
 
-
-    //Randomly places Warp Pipe in Levels
-    for (int i = numberOfLevels; i > 0; i--) {
-        int col = uniqueNumChosen();
-        int row = uniqueNumChosen();
-        marioWorld[i][row][col] = 'w';
-    }
-
-    //Randomly places Boss in Levels
-    for (int i = numberOfLevels; i > 0; i--) {
-        int col = uniqueNumChosen();
-        int row = uniqueNumChosen();
-        if (marioWorld[i][row][col] != 'w'){
-            marioWorld[i][row][col] = 'b';
-        }
-    }
+    std::cout << "Levels created." << std::endl;
 }
 
 char Levels::itemAtSlot(){

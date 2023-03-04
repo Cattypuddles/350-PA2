@@ -13,18 +13,6 @@ int baseGoombasPercent;
 int baseKoopasPercent;
 int mushroomsPercent;
 
-Levels *levels = new Levels();
-Mario *mario = new Mario();
-
-void PrintStatus(){
-// print all the stuffs using the getter methods
-std::cout << "☆☆☆☆☆☆☆☆☆☆" << std::endl;
-std::cout<< "Level: " << levels->currentLevel << ". Mario is at position: (" << levels->marioRow << "," << levels->marioColumn <<
-    ". Mario is at power level " << mario->getPreviousPowerLevel() << ". " << mario->getLastAction() << " Mario has "
-    << mario->getLivesRemaining() << " lives left. Mario has " << mario->getNumberOfCoins() << " coins. Mario will move " <<
-    mario->getNextDirection() << std::endl;
-std::cout << "☆☆☆☆☆☆☆☆☆☆" << std::endl;
-}
 
 
 void LoadData(){
@@ -49,17 +37,36 @@ void LoadData(){
 
 int main() {
     LoadData();
+
+    Levels *levels = new Levels(numberOfLevels, levelDimension);
+    Mario *mario = new Mario();
+
     mario->initialize(numberOfLives);
     levels->makeLevels(levelDimension, numberOfLevels, baseCoinPercent, baseEmptyPercent, baseGoombasPercent,
                        baseKoopasPercent, mushroomsPercent);
 
     while (levels->isGameRunning()) {
         mario->marioMove();
-        PrintStatus();
+        std::cout << "☆☆☆☆☆☆☆☆☆☆" << std::endl;
+        std::cout<< "Level: " << levels->currentLevel << ". Mario is at position: (" << levels->marioRow << "," << levels->marioColumn <<
+                 ". Mario is at power level " << mario->getPreviousPowerLevel() << ". " << mario->getLastAction() << " Mario has "
+                 << mario->getLivesRemaining() << " lives left. Mario has " << mario->getNumberOfCoins() << " coins. Mario will move " <<
+                 mario->getNextDirection() << std::endl;
+        std::cout << "☆☆☆☆☆☆☆☆☆☆" << std::endl;
     }
     return 0;
 }
 
+
+//void PrintStatus(){
+//// print all the stuffs using the getter methods
+//    std::cout << "☆☆☆☆☆☆☆☆☆☆" << std::endl;
+//    std::cout<< "Level: " << levels->currentLevel << ". Mario is at position: (" << levels->marioRow << "," << levels->marioColumn <<
+//             ". Mario is at power level " << mario->getPreviousPowerLevel() << ". " << mario->getLastAction() << " Mario has "
+//             << mario->getLivesRemaining() << " lives left. Mario has " << mario->getNumberOfCoins() << " coins. Mario will move " <<
+//             mario->getNextDirection() << std::endl;
+//    std::cout << "☆☆☆☆☆☆☆☆☆☆" << std::endl;
+//}
 
 
 
