@@ -63,47 +63,70 @@ Levels:: Levels(){
 
 }
 
-Levels:: Levels(int num, int lvl){
+Levels:: Levels(int num, int lvl, int baseCoinPercent, int baseEmptyPercent, int baseGoombasPercent,
+                int baseKoopasPercent, int mushroomsPercent){
+
+    makeLevels(lvl, num, baseCoinPercent,
+             baseEmptyPercent, baseGoombasPercent,  baseKoopasPercent,
+               mushroomsPercent);
 
     //Create marioWorld 3D Array
-    marioWorld = new char**[num];
+    marioWorld = new char**[num]();
 
     for (int i = 0; i < num; i++){
 
-        marioWorld[i] = new char*[lvl];
+        marioWorld[i] = new char*[lvl]();
 
-        for (int j=0; j < num; j++){
+        for (int j=0; j < lvl; j++){
 
-            marioWorld[i][j] = new char[lvl];
+            marioWorld[i][j] = new char[lvl]();
+
         }
     }
 
 // Populate levels for the numberOfLevels
-    for (int i = 0; i < lvl; i++){
+    for (int i = 0; i < num; i++){
         for (int j=0; j < lvl; j++){
-            marioWorld[i][j] = new char[itemAtSlot()];
+            for (int f = 0; f < lvl; f++) {
+                marioWorld[i][j][f] = itemAtSlot();
+            }
         }
     }
 
 
     //Randomly places Warp Pipe in Levels
-    for (int i = num; i > 0; i--) {
+    for (int i = 0; i < num; i++) {
         int col = uniqueNumChosen();
         int row = uniqueNumChosen();
         marioWorld[i][row][col] = 'w';
     }
 
     //Randomly places Boss in Levels
-    for (int i = num; i > 0; i--) {
-        int col = uniqueNumChosen();
-        int row = uniqueNumChosen();
-        if (marioWorld[i][row][col] != 'w'){
-            marioWorld[i][row][col] = 'b';
+    for (int i = 0; i < num; i++) {
+        bool notPlaced = true;
+        while (notPlaced) {
+            int col = uniqueNumChosen();
+            int row = uniqueNumChosen();
+            if (marioWorld[i][row][col] != 'w') {
+                marioWorld[i][row][col] = 'b';
+                notPlaced = false;
+            }
         }
     }
 
     std::cout << "Mario World 2 created." << std::endl;
 
+    // print levels for the numberOfLevels
+    for (int i = 0; i < num; i++){
+        std::cout << "Level " << i << std::endl;
+        for (int j=0; j < lvl; j++){
+            for (int f = 0; f < lvl; f++) {
+                std::cout << marioWorld[i][j][f];
+            }
+            std::cout << std::endl;
+        }
+        std::cout << std::endl;
+    }
 }
 
 Levels::~Levels(){
@@ -123,15 +146,29 @@ int Levels::getMarioColumn() {
 }
 
 void Levels::printLevel() {
-
+    for (int j=0; j < lvlDimension; j++){
+        for (int f = 0; f < lvlDimension; f++) {
+            if (j == marioRow && f == marioColumn) {
+                std::cout << "H";
+            }
+            else {
+                std::cout << marioWorld[currentLevel][j][f];
+            }
+        }
+        std::cout << std::endl;
+    }
+    std::cout << std::endl;
 }
 
 void Levels::clearCurrentMarioLocation(){
-    //set the current level's grid value at marioRow / marioColumn to "x"
+    //set the current level's grid value at marioRow / marioColumn to "x
+    marioWorld[currentLevel][marioRow][marioColumn] = 'x';
 }
 
 void Levels::goToNextLevel(){
     currentLevel++;
+    placeMarioInLevel();
+    printLevel();
 }
 
 void Levels::placeMarioInLevel() {
@@ -161,31 +198,33 @@ switch (direction) {
         //up
         marioRow--;
         if (marioRow < 0){
-            marioRow = lvlDimension;
+            marioRow = lvlDimension - 1;
         }
+        break;
 
     case 1:
         // down
         marioRow++;
-        if (marioRow > lvlDimension){
+        if (marioRow > lvlDimension - 1){
             marioRow = 0;
         }
-
+        break;
     case 2:
         // left
         marioColumn--;
         if (marioColumn < 0){
-            marioColumn = lvlDimension;
+            marioColumn = lvlDimension - 1;
         }
-
+        break;
     case 3:
         // right
         marioColumn++;
-        if (marioColumn < lvlDimension){
+        if (marioColumn < lvlDimension - 1){
             marioColumn = 0;
         }
+        break;
     }
-
+    std::cout << "CurrentLevel = " << currentLevel << ", Row = " << marioRow << ", Column = " << marioColumn << std::endl;
     c = marioWorld[currentLevel][marioRow][marioColumn];
     return c;
 }
@@ -201,7 +240,7 @@ char Levels::getItemAtRow(int rowNumber, int columnNumber) {
 void Levels::makeLevels(int levelDimension, int numberOfLevels, int baseCoinPercent,
                     int baseEmptyPercent, int baseGoombaPercent, int baseKoopaPercent, int baseMushroomPercent) {
 
-    currentLevel = -1; //(one less than starting level because we'll call GoToNextLevel() )
+    currentLevel = 0; //(one less than starting level because we'll call GoToNextLevel() )
     lvlDimension = levelDimension;
     numOfLevels = numberOfLevels;
 

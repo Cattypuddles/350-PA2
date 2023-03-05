@@ -17,11 +17,15 @@ int nextDirection = 0;
 std::string lastAction;
 std::string textNextDirection;
 
-Levels *levelss = new Levels();
+Levels *levelss;
 
 
 Mario::Mario(){
 
+}
+
+Mario::Mario(Levels *levelsInput){
+    levelss = levelsInput;
 }
 
 Mario::~Mario(){
@@ -55,10 +59,10 @@ std::string Mario::getNextDirection(){
     if (nextDirection == 1){
         textNextDirection = "Down";
     }
-    if (nextDirection == 0){
+    if (nextDirection == 2){
         textNextDirection = "Left";
     }
-    if (nextDirection == 0){
+    if (nextDirection == 3){
         textNextDirection = "Right";
     }
     return textNextDirection;
@@ -71,6 +75,8 @@ void Mario::initialize(int l){
     marioPowerLevel = 0;
     enemiesDefeatedOnCurrentLife = 0;
     marioLives = l;
+    nextDirection = rand() % 4;
+    levelss->placeMarioInLevel();
     std::cout << "Mario initialized" << std::endl;
 }
 
@@ -180,41 +186,53 @@ void Mario::marioMove() {
         case 'x':
             // nothing
             lastAction = "The position was empty.";
+            break;
         case 'm':
             eatMushroom();
             lastAction = "Mario ate a mushroom.";
+            levelss->clearCurrentMarioLocation();
+            break;
         case 'c':
             pickupCoin();
             lastAction = "Mario picked up a coin.";
+            levelss->clearCurrentMarioLocation();
+            break;
         case 'k':
             haveLost = fightKoopa();
             if (haveLost)
                 lastAction = "Mario fought a Koopa and lost.";
-            else
+            else {
                 lastAction = "Mario fought a Koopa and won.";
+                levelss->clearCurrentMarioLocation();
+            }
+            break;
         case 'g':
             haveLost = fightGoomba();
             if (haveLost)
                 lastAction = "Mario fought a Goomba and lost.";
-            else
+            else {
                 lastAction = "Mario fought a Goomba and won.";
+                levelss->clearCurrentMarioLocation();
+            }
+            break;
         case 'b':
             haveLost = fightBoss();
             if (haveLost)
                 lastAction = "Mario fought the boss and lost.";
-            else
+            else {
                 lastAction = "Mario fought the boss and won.";
-            warp();
+                warp();
+            }
+            break;
         case 'w':
             warp();
             lastAction = "Mario found a warp pipe.";
+            break;
     }
 
     if (haveLost) {
         marioMove();
-    } else {
-        levelss->clearCurrentMarioLocation();
-
-        nextDirection = rand() % 4;
     }
+
+    nextDirection = rand() % 4;
 }

@@ -38,21 +38,21 @@ void LoadData(){
 int main() {
     LoadData();
 
-    Levels *levels = new Levels(numberOfLevels, levelDimension);
-    Mario *mario = new Mario();
+    Levels *levels = new Levels(numberOfLevels, levelDimension, baseCoinPercent, baseEmptyPercent, baseGoombasPercent,
+                                baseKoopasPercent, mushroomsPercent);
+    Mario *mario = new Mario(levels);
 
     mario->initialize(numberOfLives);
-    levels->makeLevels(levelDimension, numberOfLevels, baseCoinPercent, baseEmptyPercent, baseGoombasPercent,
-                       baseKoopasPercent, mushroomsPercent);
 
     while (levels->isGameRunning()) {
         mario->marioMove();
-        std::cout << "☆☆☆☆☆☆☆☆☆☆" << std::endl;
+        std::cout << "************" << std::endl;
         std::cout<< "Level: " << levels->currentLevel << ". Mario is at position: (" << levels->marioRow << "," << levels->marioColumn <<
                  ". Mario is at power level " << mario->getPreviousPowerLevel() << ". " << mario->getLastAction() << " Mario has "
                  << mario->getLivesRemaining() << " lives left. Mario has " << mario->getNumberOfCoins() << " coins. Mario will move " <<
                  mario->getNextDirection() << std::endl;
-        std::cout << "☆☆☆☆☆☆☆☆☆☆" << std::endl;
+        std::cout << "************" << std::endl;
+        levels->printLevel();
     }
     return 0;
 }

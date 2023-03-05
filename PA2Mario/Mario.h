@@ -5,6 +5,7 @@
 #ifndef PA2MARIO_MARIO_H
 #define PA2MARIO_MARIO_H
 
+#include "Levels.h"
 
 class Mario {
 public:
@@ -17,6 +18,7 @@ public:
     int nextDirection;
 
     Mario();
+    Mario(Levels *levelsInput);
     ~Mario();
     void setLives(int initialNumberOfLives);
     int getPreviousPowerLevel();

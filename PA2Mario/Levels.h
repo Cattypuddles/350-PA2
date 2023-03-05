@@ -19,7 +19,8 @@ public:
     int randomNum;
 
     Levels();
-    Levels(int num, int lvl);
+    Levels(int num, int lvl, int baseCoinPercent, int baseEmptyPercent, int baseGoombasPercent,
+           int baseKoopasPercent, int mushroomsPercent);
     ~Levels();
     int getCurrentLevel();
     int getMarioRow();
