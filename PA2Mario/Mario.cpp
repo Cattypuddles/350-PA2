@@ -7,6 +7,7 @@
 #include "Mario.h"
 #include "Levels.h"
 
+//Member Vars
 int marioLives;
 int marioCoins;
 int marioPowerLevel;
@@ -17,9 +18,10 @@ int nextDirection = 0;
 std::string lastAction;
 std::string textNextDirection;
 
+//Creates Levels obj
 Levels *levelss;
 
-
+//Constructors
 Mario::Mario(){
 
 }
@@ -28,6 +30,7 @@ Mario::Mario(Levels *levelsInput){
     levelss = levelsInput;
 }
 
+//Destructor
 Mario::~Mario(){
 
 }
@@ -36,6 +39,7 @@ void Mario::setLives(int initialNumberOfLives) {
    marioLives = initialNumberOfLives;
 }
 
+//Getters for print statements
 int Mario::getPreviousPowerLevel(){
     return marioPreviousPowerLevel;
 }
@@ -54,20 +58,24 @@ int Mario::getNumberOfCoins(){
 
 std::string Mario::getNextDirection(){
     if (nextDirection == 0){
-        textNextDirection = "Up";
+        textNextDirection = "move Up";
     }
     if (nextDirection == 1){
-        textNextDirection = "Down";
+        textNextDirection = "move Down";
     }
     if (nextDirection == 2){
-        textNextDirection = "Left";
+        textNextDirection = "move Left";
     }
     if (nextDirection == 3){
-        textNextDirection = "Right";
+        textNextDirection = "move Right";
+    }
+    if (nextDirection == 9){
+        textNextDirection = "Warp";
     }
     return textNextDirection;
 }
 
+//Initializes Mario in the level.
 void Mario::initialize(int l){
     int moveDirection = rand() % 4;
     //nextDirection = random int between 1 and 4
@@ -80,9 +88,11 @@ void Mario::initialize(int l){
     std::cout << "Mario initialized" << std::endl;
 }
 
+//Warps Mario to next level
 void Mario::warp() {
     levelss->goToNextLevel();
 }
+
 
 void Mario::loseToBoss(){
     marioPowerLevel = marioPowerLevel - 2;
@@ -174,6 +184,7 @@ void Mario::eatMushroom(){
     }
 }
 
+//Determines how Mario interacts with whichever Char he encounters
 void Mario::marioMove() {
     marioPreviousPowerLevel = marioPowerLevel;
 
@@ -221,12 +232,14 @@ void Mario::marioMove() {
                 lastAction = "Mario fought the boss and lost.";
             else {
                 lastAction = "Mario fought the boss and won.";
+                levelss->move(9);
                 warp();
             }
             break;
         case 'w':
             warp();
             lastAction = "Mario found a warp pipe.";
+            levelss->move(9);
             break;
     }
 

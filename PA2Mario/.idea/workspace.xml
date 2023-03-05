@@ -23,9 +23,7 @@
     <list default="true" id="78648339-058a-471f-8cca-354577c9b770" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Levels.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Levels.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Levels.h" beforeDir="false" afterPath="$PROJECT_DIR$/Levels.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mario.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Mario.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mario.h" beforeDir="false" afterPath="$PROJECT_DIR$/Mario.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
@@ -92,22 +90,11 @@
       <workItem from="1677821909863" duration="6214000" />
       <workItem from="1677872815373" duration="1184000" />
       <workItem from="1677874100492" duration="4217000" />
-      <workItem from="1677978071227" duration="5517000" />
+      <workItem from="1677978071227" duration="9528000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Levels.cpp</url>
-          <line>168</line>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

@@ -44,30 +44,31 @@ int main() {
 
     mario->initialize(numberOfLives);
 
+    std::ofstream fw;
+
+    fw.open("Log.txt");
+    if (fw.is_open()) {
     while (levels->isGameRunning()) {
-        mario->marioMove();
-        std::cout << "************" << std::endl;
-        std::cout<< "Level: " << levels->currentLevel << ". Mario is at position: (" << levels->marioRow << "," << levels->marioColumn <<
-                 ". Mario is at power level " << mario->getPreviousPowerLevel() << ". " << mario->getLastAction() << " Mario has "
-                 << mario->getLivesRemaining() << " lives left. Mario has " << mario->getNumberOfCoins() << " coins. Mario will move " <<
-                 mario->getNextDirection() << std::endl;
-        std::cout << "************" << std::endl;
-        levels->printLevel();
+            mario->marioMove();
+            std::cout << "************" << std::endl;
+            std::cout << "Level: " << levels->currentLevel << ". Mario is at position: (" << levels->marioRow << ","
+                      << levels->marioColumn << ")" <<
+                      ". Mario is at power level " << mario->getPreviousPowerLevel() << ". " << mario->getLastAction()
+                      << " Mario has "
+                      << mario->getLivesRemaining() << " lives left. Mario has " << mario->getNumberOfCoins()
+                      << " coins. Mario will " << mario->getNextDirection() << std::endl;
+            std::cout << "************" << std::endl;
+            fw << "************" << "\n";
+            fw << "Level: " << levels->currentLevel << ". Mario is at position: (" << levels->marioRow << ","
+                  << levels->marioColumn << ")" <<
+                  ". Mario is at power level " << mario->getPreviousPowerLevel() << ". " << mario->getLastAction()
+                  << " Mario has "
+                  << mario->getLivesRemaining() << " lives left. Mario has " << mario->getNumberOfCoins()
+                  << " coins. Mario will " << mario->getNextDirection() << "\n";
+            fw << "************" << "\n";
+            levels->printLevel();
+        }
     }
+    fw.close();
     return 0;
 }
-
-
-//void PrintStatus(){
-//// print all the stuffs using the getter methods
-//    std::cout << "☆☆☆☆☆☆☆☆☆☆" << std::endl;
-//    std::cout<< "Level: " << levels->currentLevel << ". Mario is at position: (" << levels->marioRow << "," << levels->marioColumn <<
-//             ". Mario is at power level " << mario->getPreviousPowerLevel() << ". " << mario->getLastAction() << " Mario has "
-//             << mario->getLivesRemaining() << " lives left. Mario has " << mario->getNumberOfCoins() << " coins. Mario will move " <<
-//             mario->getNextDirection() << std::endl;
-//    std::cout << "☆☆☆☆☆☆☆☆☆☆" << std::endl;
-//}
-
-
-
-

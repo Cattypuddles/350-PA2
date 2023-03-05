@@ -5,8 +5,8 @@
 #include <iostream>
 #include "Levels.h"
 
-using namespace std;
 
+//Member vars
 int marioRow;
 int marioColumn;
 int currentLevel;
@@ -20,49 +20,12 @@ int lvlDimension;
 int numOfLevels;
 char*** marioWorld;
 
+//Constructors
 Levels:: Levels(){
-
-//    //Create marioWorld 3D Array
-//    marioWorld = new char**[numOfLevels];
-//
-//    for (int i = 0; i < numOfLevels; i++){
-//
-//        marioWorld[i] = new char*[lvlDimension];
-//
-//        for (int j=0; j < numOfLevels; j++){
-//
-//            marioWorld[i][j] = new char[lvlDimension];
-//        }
-//    }
-//
-//// Populate levels for the numberOfLevels
-//    for (int i = 0; i < lvlDimension; i++){
-//        for (int j=0; j < lvlDimension; j++){
-//            marioWorld[i][j] = new char[itemAtSlot()];
-//        }
-//    }
-//
-//
-//    //Randomly places Warp Pipe in Levels
-//    for (int i = numOfLevels; i > 0; i--) {
-//        int col = uniqueNumChosen();
-//        int row = uniqueNumChosen();
-//        marioWorld[i][row][col] = 'w';
-//    }
-//
-//    //Randomly places Boss in Levels
-//    for (int i = numOfLevels; i > 0; i--) {
-//        int col = uniqueNumChosen();
-//        int row = uniqueNumChosen();
-//        if (marioWorld[i][row][col] != 'w'){
-//            marioWorld[i][row][col] = 'b';
-//        }
-//    }
-//
-//    std::cout << "Mario World created." << std::endl;
 
 }
 
+//Creates and Populates MarioWorld array
 Levels:: Levels(int num, int lvl, int baseCoinPercent, int baseEmptyPercent, int baseGoombasPercent,
                 int baseKoopasPercent, int mushroomsPercent){
 
@@ -129,10 +92,12 @@ Levels:: Levels(int num, int lvl, int baseCoinPercent, int baseEmptyPercent, int
     }
 }
 
+//Destructor
 Levels::~Levels(){
 
 }
 
+//Getters for Print statement
 int Levels::getCurrentLevel() {
     return currentLevel;
 }
@@ -145,6 +110,7 @@ int Levels::getMarioColumn() {
     return marioColumn;
 }
 
+//Prints 2D array level
 void Levels::printLevel() {
     for (int j=0; j < lvlDimension; j++){
         for (int f = 0; f < lvlDimension; f++) {
@@ -160,28 +126,24 @@ void Levels::printLevel() {
     std::cout << std::endl;
 }
 
+//Clears array location if Mario has picked up item or defeated enemy
 void Levels::clearCurrentMarioLocation(){
     //set the current level's grid value at marioRow / marioColumn to "x
     marioWorld[currentLevel][marioRow][marioColumn] = 'x';
 }
 
+//Adds to currentLevel var
 void Levels::goToNextLevel(){
     currentLevel++;
-    placeMarioInLevel();
-    printLevel();
 }
 
+//Places Mario in the level
 void Levels::placeMarioInLevel() {
     marioRow = uniqueNumChosen();
     marioColumn = uniqueNumChosen();
-    // pick row number between 0 and (levelDimension - 1)
-    // ex: levelDimension is 5, pick a number between 0 and 4
-    // pick column number between 0 and (levelDimension - 1)
-    // ex: levelDimension is 5, pick a number between 0 and 4
-    // set marioRow to the random row number
-    // set marioColumn to the random column number
 }
 
+//Checks to see if Mario has completed the game
 bool Levels::isGameRunning(){
     if (currentLevel < numOfLevels) {
         return true;
@@ -189,7 +151,7 @@ bool Levels::isGameRunning(){
     return false;
 }
 
-
+//Moves Mario in random location; Each has 25% probability
 char Levels::move(int direction){
 // Return item at Mario's new position
 char c;
@@ -223,20 +185,20 @@ switch (direction) {
             marioColumn = 0;
         }
         break;
+    case 9:
+        placeMarioInLevel();
     }
     std::cout << "CurrentLevel = " << currentLevel << ", Row = " << marioRow << ", Column = " << marioColumn << std::endl;
     c = marioWorld[currentLevel][marioRow][marioColumn];
     return c;
 }
 
-// check to see what item (if any) is in the same spot as mario
-// call GetItemAtRow(marioRow, marioColumn)
-// return the item char at mario's location
+//Gets item or enemy at array location
 char Levels::getItemAtRow(int rowNumber, int columnNumber) {
     return marioWorld[currentLevel][marioRow][marioColumn];
 }
 
-
+//Initializes member vars from data read from file
 void Levels::makeLevels(int levelDimension, int numberOfLevels, int baseCoinPercent,
                     int baseEmptyPercent, int baseGoombaPercent, int baseKoopaPercent, int baseMushroomPercent) {
 
@@ -255,6 +217,7 @@ void Levels::makeLevels(int levelDimension, int numberOfLevels, int baseCoinPerc
     std::cout << "Levels created." << std::endl;
 }
 
+//Determines which char to place on array spot based off of random num
 char Levels::itemAtSlot(){
     int slotNum = rand() % 99;
     if (slotNum < coinPercent){
@@ -274,6 +237,7 @@ char Levels::itemAtSlot(){
     }
 }
 
+//Makes a random num for new MarioColumn or MarioRow
 int Levels::uniqueNumChosen(){
     randomNum = rand() % (lvlDimension-1);
     return randomNum;
